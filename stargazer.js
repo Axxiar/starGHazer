@@ -1,28 +1,54 @@
 const fs = require('fs/promises');
 const http = require('http');
-const path = require('path')
+const path = require('path');
 
 const REPO_ENDPOINT = "https://api.github.com/repos/intuitem/ciso-assistant-community"
 const STAT_PATH = "./res/ciso-assistant-stats.json"
-const URLS = ["/", "/index.html", "/public/index.js" ]
+const URLS = ["/", "/index.html", "/public/index.js"]
 
-async function getRepoStars(debug = true) {
+
+async function fetchAPI(url) {
     try {
-        const res = await fetch(REPO_ENDPOINT);
+        const res = await fetch(url);
         if (res.status === 200) {
-            const infos = await res.json();
-            if (debug)
-                console.log(`[Intuitem] ciso-assistant: ${infos.stargazers_count}⭐`);
-            return infos.stargazers_count;
+            return await res.json();
         }
-        else if (res.status === 403 && debug)
-            console.log("Forbidden. Exceeded request rate ?");
-        return -1;
+        return {};
     }
     catch (err) {
-        console.error("Error fetching repo data:", err);
-        return -1;
+        console.error(`Error fetching ${url} : ${err}`);
+        return {};
     }
+}
+
+
+function getRepoStars(stats, debug = true) {
+    if (debug)
+        console.log(`[Intuitem] ciso-assistant: ${stats.stargazers_count}⭐`);
+    return stats.stargazers_count;
+}
+
+
+function getRepoIssues(stats, debug = true) {
+    if (debug)
+        console.log(`[Intuitem] ciso-assistant (open issues): ${stats.open_issues_count}🎯`);
+    return stats.open_issues_count;
+}
+
+function getRepoForks(stats, debug = true) {
+    if (debug)
+        console.log(`[Intuitem] ciso-assistant (forks): ${stats.forks_count}🔱`);
+    return stats.forks_count;
+}
+
+async function getRepoBranches(stats, debug = true) {
+    const branches = await fetchAPI(REPO_ENDPOINT + "/branches");
+
+    if (branches == {}) return -1;
+
+    if (debug)
+        console.log(`[Intuitem] ciso-assistant (branches): ${branches.length}🌿`);
+    return branches.length;
 }
 
 async function loadJson() {
@@ -36,8 +62,14 @@ async function loadJson() {
     }
 }
 
-async function saveToJson(starCount) {
-    if (starCount === -1)
+async function saveToJson(stats, debug = true) {
+
+    starCount = getRepoStars(stats, debug);
+    issueCount = getRepoIssues(stats, debug);
+    forkCount = getRepoForks(stats, debug);
+    branchCount = await getRepoBranches(stats, debug);
+
+    if (starCount === -1 || issueCount === -1 || forkCount === -1 || branchCount === -1)
         return;
 
     jsonData = await loadJson();
@@ -51,6 +83,9 @@ async function saveToJson(starCount) {
             "minutes": today.getMinutes(),
         },
         "starCount": starCount,
+        "issueCount": issueCount,
+        "forkCount": forkCount,
+        "branchCount": branchCount
     });
     fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
         if (err) {
@@ -59,10 +94,25 @@ async function saveToJson(starCount) {
     });
 }
 
+async function popLastJson() {
+    console.log("Security: Are you sure ?");
+    return;
+
+    jsonData = await loadJson();
+    const poped = jsonData.pop();
+
+    fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
+        if (err) {
+            console.error('Error poping from file:', err);
+        }
+    });
+    return poped;
+}
+
 
 async function displayOnServer() {
     const PORT = 5000;
-    const server = http.createServer(async(req, res) => {
+    const server = http.createServer(async (req, res) => {
 
         // if (req.url == '/favicon.ico') {
         //     // .ico = 'image/x-icon' or 'image/vnd.microsoft.icon'
@@ -79,7 +129,7 @@ async function displayOnServer() {
 
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(stats));
-        } 
+        }
 
         else if (URLS.includes(req.url)) {
             try {
@@ -99,7 +149,7 @@ async function displayOnServer() {
 
             } catch (err) {
                 res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("Uh oh, looks like i have reading troubles...");
+                res.end("Uh oh, looks like i have reading issues...");
             }
         }
 
@@ -113,10 +163,11 @@ async function displayOnServer() {
     });
 }
 
+
 async function main() {
-    // starCount = await getRepoStars(true);
-    // saveToJson(starCount);
-   displayOnServer();
+    // jsonStats = await fetchAPI(REPO_ENDPOINT);
+    // await saveToJson(jsonStats, true);
+    displayOnServer();
 }
 
 

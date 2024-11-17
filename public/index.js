@@ -6,7 +6,6 @@ window.onload = () => {
             const labels = resjson.map((e) => {
                 return e.date.day + "/" + e.date.month + "/" + e.date.year
             })
-
             const data = {
                 labels: labels,
                 datasets: [
@@ -36,7 +35,6 @@ window.onload = () => {
                     }
                 ]
             };
-
             const config = {
                 type: 'line',
                 data: data,
@@ -48,12 +46,36 @@ window.onload = () => {
                         },
                         title: {
                             display: true,
-                            text: 'Intuitem: ciso-assistant'
+                            text: 'Intuitem: ciso-assistant',
+                            font: {
+                                size: 18
+                            }
                         }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#f2d5cf'
+                            },
+                            grid: {
+                                color: '#1e1e2e'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#fff'
+                            },
+                            grid: {
+                                color: '#1e1e2e'
+                            }
+                        }
+
                     }
-                },
+                }
             };
-            new Chart(ctx, config);
+
+            a = new Chart(ctx, config);
+            Chart.defaults.color = '#c6d0f5';
         });
     });
 };

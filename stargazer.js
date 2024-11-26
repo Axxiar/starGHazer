@@ -3,7 +3,7 @@ const http = require('http');
 const path = require('path');
 
 const REPO_ENDPOINT = "https://api.github.com/repos/intuitem/ciso-assistant-community"
-const STAT_PATH = "./res/ciso-assistant-stats.json"
+const STAT_PATH = "./data/ciso-assistant-stats.json"
 const URLS = ["/", "/index.html", "/public/index.js"]
 
 
@@ -41,14 +41,24 @@ function getRepoForks(stats, debug = true) {
     return stats.forks_count;
 }
 
-async function getRepoBranches(stats, debug = true) {
-    const branches = await fetchAPI(REPO_ENDPOINT + "/branches");
+async function getRepoBranches(perPage = 100, debug = true) {
+    let branches = {};
+    let current_branches_len = 0;
+    let page_index = 1;
+    let total = 0;
 
-    if (branches == {}) return -1;
+    do {
+        branches = await fetchAPI(REPO_ENDPOINT + `/branches?per_page=${perPage}&page=${page_index}`);
+        if (branches == {}) return -1;
+
+        current_branches_len = branches.length;
+        total += current_branches_len;
+        page_index++;
+    } while (current_branches_len == perPage)
 
     if (debug)
-        console.log(`[Intuitem] ciso-assistant (branches): ${branches.length}🌿`);
-    return branches.length;
+        console.log(`[Intuitem] ciso-assistant (branches): ${total}🌿`);
+    return total;
 }
 
 async function loadJson() {
@@ -67,7 +77,7 @@ async function saveToJson(stats, debug = true) {
     starCount = getRepoStars(stats, debug);
     issueCount = getRepoIssues(stats, debug);
     forkCount = getRepoForks(stats, debug);
-    branchCount = await getRepoBranches(stats, debug);
+    branchCount = await getRepoBranches(100, debug);
 
     if (starCount === -1 || issueCount === -1 || forkCount === -1 || branchCount === -1)
         return;

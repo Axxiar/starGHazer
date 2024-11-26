@@ -12,7 +12,7 @@ window.onload = () => {
                     {
                         label: '⭐',
                         data: resjson.map((e) => { return e.starCount; }),
-                        borderColor: '#5d4493',
+                        borderColor: '#7157a2',
                         tension: 0
                     },
                     {

@@ -4,6 +4,7 @@ const path = require('path');
 
 const REPO_ENDPOINT = "https://api.github.com/repos/intuitem/ciso-assistant-community"
 const STAT_PATH = "./data/ciso-assistant-stats.json"
+const EVENT_PATH = "./data/ciso-assistant-events.json"
 const URLS = ["/", "/index.html", "/public/index.js"]
 
 
@@ -61,9 +62,9 @@ async function getRepoBranches(perPage = 100, debug = true) {
     return total;
 }
 
-async function loadJson() {
+async function loadJson(path) {
     try {
-        const data = await fs.readFile(STAT_PATH);
+        const data = await fs.readFile(path);
         return JSON.parse(data);
     }
     catch (err) {
@@ -82,7 +83,7 @@ async function saveToJson(stats, debug = true) {
     if (starCount === -1 || issueCount === -1 || forkCount === -1 || branchCount === -1)
         return;
 
-    jsonData = await loadJson();
+    jsonData = await loadJson(STAT_PATH);
     let today = new Date();
     jsonData.push({
         "date": {
@@ -108,7 +109,7 @@ async function popLastJson() {
     console.log("Security: Are you sure ?");
     return;
 
-    jsonData = await loadJson();
+    jsonData = await loadJson(STAT_PATH);
     const poped = jsonData.pop();
 
     fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
@@ -135,11 +136,19 @@ async function displayOnServer() {
         // }
 
         if (req.url == "/stats") {
-            const stats = await loadJson();
+            const stats = await loadJson(STAT_PATH);
 
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(stats));
         }
+
+        else if (req.url == "/events") {
+            const events = await loadJson(EVENT_PATH);
+
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(events));
+        }
+
 
         else if (URLS.includes(req.url)) {
             try {

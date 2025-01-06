@@ -49,7 +49,7 @@ function displayData(statJson, eventJson) {
                 tension: 0,
                 pointRadius: 7,
                 pointHoverRadius: 9,
-                pointHoverBackgroundColor: "#c6d0f5"
+                pointHoverBackgroundColor: "#c6d0f5",
             },
             {
                 label: '🎯 issues ',
@@ -58,7 +58,8 @@ function displayData(statJson, eventJson) {
                 tension: 0,
                 pointRadius: 7,
                 pointHoverRadius: 9,
-                pointHoverBackgroundColor: "#c6d0f5"
+                pointHoverBackgroundColor: "#c6d0f5",
+                hidden: true
             },
             {
                 label: '🔱 forks ',
@@ -67,7 +68,8 @@ function displayData(statJson, eventJson) {
                 tension: 0,
                 pointRadius: 7,
                 pointHoverRadius: 9,
-                pointHoverBackgroundColor: "#c6d0f5"
+                pointHoverBackgroundColor: "#c6d0f5",
+                hidden: true
             },
             {
                 label: '🌿 branches ',
@@ -76,7 +78,8 @@ function displayData(statJson, eventJson) {
                 tension: 0,
                 pointRadius: 7,
                 pointHoverRadius: 9,
-                pointHoverBackgroundColor: "#c6d0f5"
+                pointHoverBackgroundColor: "#c6d0f5",
+                hidden: true
             }
 
         ]

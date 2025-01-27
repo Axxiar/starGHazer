@@ -5,7 +5,7 @@ window.onload = () => {
             fetch("/events").then((res2) => {
                 res2.json().then((eventJson) => {
                     console.log(eventJson);
-                    displayData(statJson, eventJson);
+                    displayData(statJson, eventJson, 2025);
                 });
             });
         });
@@ -33,9 +33,13 @@ function buildAnnotations(eventJson) {
     })
 }
 
-function displayData(statJson, eventJson) {
+function displayData(statJson, eventJson, selectedYear = null) {
     const ctx = document.getElementById('starsChart');
 
+    if (selectedYear) {
+        statJson = statJson.filter((e) => e.date.year == selectedYear)
+        eventJson = eventJson.filter((e) => e.date.year == selectedYear)
+    }
     const labels = statJson.map((e) => {
         return e.date.day + "/" + e.date.month + "/" + e.date.year
     })

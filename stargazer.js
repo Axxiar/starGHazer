@@ -48,6 +48,7 @@ async function getRepoBranches(perPage = 100, debug = true) {
     let page_index = 1;
     let total = 0;
 
+    // TODO: rewrite this loop with better break condition
     do {
         branches = await fetchAPI(REPO_ENDPOINT + `/branches?per_page=${perPage}&page=${page_index}`);
         if (branches == {}) return -1;
@@ -105,35 +106,25 @@ async function saveToJson(stats, debug = true) {
     });
 }
 
-async function popLastJson() {
-    console.log("Security: Are you sure ?");
-    return;
-
-    jsonData = await loadJson(STAT_PATH);
-    const poped = jsonData.pop();
-
-    fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
-        if (err) {
-            console.error('Error poping from file:', err);
-        }
-    });
-    return poped;
-}
+// async function popLastJson() {
+//     console.log("Security: Are you sure ?");
+//     return;
+//
+//     jsonData = await loadJson(STAT_PATH);
+//     const poped = jsonData.pop();
+//
+//     fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
+//         if (err) {
+//             console.error('Error poping from file:', err);
+//         }
+//     });
+//     return poped;
+// }
 
 
 async function displayOnServer() {
     const PORT = 5000;
     const server = http.createServer(async (req, res) => {
-
-        // if (req.url == '/favicon.ico') {
-        //     // .ico = 'image/x-icon' or 'image/vnd.microsoft.icon'
-        //     const FAVICON = path.join(__dirname, 'public', 'favicon.png');
-        //     console.log(__dirname)
-        //     console.log("ayo bla")
-        //     const data = await fs.readFile("favicon.ico");
-        //     res.setHeader('Content-Type', 'image/x-icon');
-        //     res.end(data);
-        // }
 
         if (req.url == "/stats") {
             const stats = await loadJson(STAT_PATH);

@@ -4,6 +4,7 @@
 # Titre
 
 Track statistic of a GitHub repo without auth
+
 🚧 *This project is under construction* 🚧
 
 
@@ -11,6 +12,7 @@ Track statistic of a GitHub repo without auth
 ## About The Project
 
 This project allows you to track some statistics of a GitHub repo using GitHub's Rest API
+
 No authentication is needed, however the API rate limit is 60/h so if you start the program to many times, you might end-up being blocked for an hour
 
 ### Built With

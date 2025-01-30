@@ -175,8 +175,8 @@ async function displayOnServer() {
 
 
 async function main() {
-    // jsonStats = await fetchAPI(REPO_ENDPOINT);
-    // await saveToJson(jsonStats, true);
+    jsonStats = await fetchAPI(REPO_ENDPOINT);
+    await saveToJson(jsonStats, true);
     displayOnServer();
 }
 

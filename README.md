@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <!-- INTRO -->
-# 🌟 starGHazer 🌟
+# 🌟 starGHazer
 
 ### Track statistics of a GitHub repo without authentication
 
@@ -69,7 +69,8 @@ If you wish to contribute, feel free to do so ! You can fork and open PRs.
 
 
 <!-- LICENSE -->
-<!-- ## License -->
+## License
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

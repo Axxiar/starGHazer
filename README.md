@@ -52,6 +52,7 @@ Soon...
 ## Roadmap
 
 - [X]  🗝 Support for events
+- [ ]  🗝 Typescript rewrite
 - [ ]  🗝 Visually select displayed year data
 - [ ]  🗝 Deployment config and guide for linux based server using cronjobs
 - [ ]  ❓ Support for multiple days events

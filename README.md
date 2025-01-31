@@ -1,9 +1,11 @@
 <a name="readme-top"></a>
 
 <!-- INTRO -->
-# starGHazer
+# 🌟 starGHazer 🌟
 
-Track statistics of a GitHub repo without authentication
+### Track statistics of a GitHub repo without authentication
+
+![image](https://github.com/user-attachments/assets/9e03ce79-2724-4652-80d9-c639481d8fd1)
 
 🚧 *This project is under construction* 🚧
 
@@ -14,11 +16,20 @@ Track statistics of a GitHub repo without authentication
 > [!NOTE]  
 > The name comes from one of the API endpoint called stargazer *(= all the people that starred a repo)*, combined with GH for GitHub initials
 
-This project allows you to track some statistics of a GitHub repo using GitHub's Rest API
+This project allows you to track some statistics of a GitHub repo using GitHub's Rest API. Currently, it tracks count of : 
+- Repo's stars
+- Repo's issues
+- Repo's forks
+- Repo's branches
 
-No authentication is needed
+You also have the ability to easily add events
+
+No authentication is needed.
+
+Every time you will call the main program, 1 call to the API is made + 1 or more depending on how much branch your repo has (1 request made every 100 branches, which is the [max pagination returned by the endpoint](https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches)). 
+
 > [!IMPORTANT]  
-> The API rate limit is 60 call/hour so if you start the main program to many times, you might end-up being blocked for an hour
+> The API rate limit is 60 call/hour so if you start the main program to many times and/or have too many branches on fetched repo, you might end-up being blocked for an hour
 
 
 ### Built With
@@ -31,21 +42,30 @@ Theses are the languages/frameworks/libraries used.
 
 
 <!-- GETTING STARTED -->
-<!-- ## Getting Started
+## Getting Started
 
-### Installation -->
+### Installation
 
-
+Soon...
 
 <!-- ROADMAP -->
-<!-- ## Roadmap
+## Roadmap
 
-- [ ]  -->
+- [X]  🗝 Support for events
+- [ ]  🗝 Visually select displayed year data
+- [ ]  🗝 Deployment config and guide for linux based server using cronjobs
+- [ ]  ❓ Support for multiple days events
+- [ ]  ❓ More statistics
+
+🗝: key feature
+<!-- 🔥: cool extra feature idea -->
+❓: extra feature idea (wil probably not be added or at least not soon)
 
 
 <!-- CONTRIBUTING --> 
-<!-- ## Contributing -->
+## Contributing
 
+If you wish to contribute, feel free to do so ! You can fork and open PRs.
 
 
 <!-- LICENSE -->

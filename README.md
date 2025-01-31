@@ -70,7 +70,7 @@ If you wish to contribute, feel free to do so ! You can fork and open PRs.
 
 <!-- LICENSE -->
 ## License
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html)
+[GNU General Public License v3.0](./LICENSE)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

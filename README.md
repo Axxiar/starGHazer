@@ -59,9 +59,9 @@ Soon...
 - [ ]  ❓ Support for multiple days events
 - [ ]  ❓ More statistics
 
-🗝: key feature
-🔥: cool extra feature idea 
-❓: extra feature idea (wil probably not be added or at least not soon)
+🗝: *key feature*
+🔥: *cool extra feature idea*
+❓: *extra feature idea (wil probably not be added or at least not soon)*
 
 
 <!-- CONTRIBUTING --> 

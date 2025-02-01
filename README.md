@@ -49,17 +49,18 @@ Theses are the languages/frameworks/libraries used.
 Soon...
 
 <!-- ROADMAP -->
-## Roadmap
+## Roadmap (ordered by importance)
 
 - [X]  🗝 Support for events
+- [ ]  🗝 Setup config files and guide
 - [ ]  🗝 Typescript rewrite
-- [ ]  🗝 Visually select displayed year data
-- [ ]  🗝 Deployment config and guide for linux based server using cronjobs
+- [ ]  🔥 Visually select displayed year data
+- [ ]  🔥 Deployment config and guide for linux based server using cronjobs
 - [ ]  ❓ Support for multiple days events
 - [ ]  ❓ More statistics
 
 🗝: key feature
-<!-- 🔥: cool extra feature idea -->
+🔥: cool extra feature idea 
 ❓: extra feature idea (wil probably not be added or at least not soon)
 
 

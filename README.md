@@ -17,10 +17,10 @@
 > The name comes from one of the API endpoint called stargazer *(= all the people that starred a repo)*, combined with GH for GitHub initials
 
 This project allows you to track some statistics of a GitHub repo using GitHub's Rest API. Currently, it tracks count of : 
-- Repo's stars
-- Repo's issues
-- Repo's forks
-- Repo's branches
+- ⭐ Repo's stars
+- 🎯 Repo's issues
+- 🔱 Repo's forks
+- 🌿 Repo's branches
 
 You also have the ability to easily add events
 
@@ -28,7 +28,7 @@ No authentication is needed.
 
 Every time you will call the main program, 1 call to the API is made + 1 or more depending on how much branch your repo has (1 request made every 100 branches, which is the [max pagination returned by the endpoint](https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches)). 
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > The API rate limit is 60 call/hour so if you start the main program to many times and/or have too many branches on fetched repo, you might end-up being blocked for an hour
 
 
@@ -55,6 +55,7 @@ Soon...
 - [ ]  🗝 Setup config files and guide
 - [ ]  🗝 Typescript rewrite
 - [ ]  🔥 Visually select displayed year data
+- [ ]  🔥 Terminal wizard for first setup
 - [ ]  🔥 Deployment config and guide for linux based server using cronjobs
 - [ ]  ❓ Support for multiple days events
 - [ ]  ❓ More statistics

@@ -1,8 +1,9 @@
 const fs = require('fs/promises');
 const http = require('http');
 const path = require('path');
+require('dotenv').config()
 
-const REPO_ENDPOINT = "https://api.github.com/repos/intuitem/ciso-assistant-community"
+const REPO_ENDPOINT = `https://api.github.com/repos/${process.env.REPO_OWNER}/${process.env.REPO_NAME}`
 const STAT_PATH = "./data/ciso-assistant-stats.json"
 const EVENT_PATH = "./data/ciso-assistant-events.json"
 const URLS = ["/", "/index.html", "/public/index.js"]

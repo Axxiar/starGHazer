@@ -75,6 +75,7 @@ node starghzer.js
 - [X]  🗝 Support for events
 - [ ]  🗝 Setup config files and guide
 - [ ]  🗝 Typescript rewrite
+- [ ]  🗝 Support separated stats file to avoid large files
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
 - [ ]  🔥 Deployment config and guide for linux based server using cronjobs

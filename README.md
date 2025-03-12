@@ -46,9 +46,30 @@ Theses are the languages/frameworks/libraries used.
 <!-- GETTING STARTED -->
 ## Getting Started
 
-### Installation
+### Installation steps
 
-Soon...
+Make sure you have `node` installed and the `dotenv` package.
+
+Clone the repo and cd into it
+```bash
+git clone https://github.com/Axxiar/starGHazer.git
+cd starGHazer/
+```
+Rename `.env.example` file to `.env`
+
+Edit `.env` and replace with the owner (`REPO_OWNER`) and name (`REPO_NAME`) of the repository you want to track
+
+> e.g. to track this repo : https://github.com/catppuccin/palette, the owner is "catppuccin" and the repo name is "palette",
+so you should have this as `.env` file :
+> ```env
+> REPO_OWNER="catppuccin"
+> REPO_NAME="palette"
+> ```
+
+Finally, start the main program and follow instructions
+```bash
+node starghzer.js
+```
 
 <!-- ROADMAP -->
 ## Roadmap (ordered by importance)
@@ -56,6 +77,7 @@ Soon...
 - [X]  🗝 Support for events
 - [ ]  🗝 Setup config files and guide
 - [X]  🗝 Typescript rewrite
+- [ ]  🗝 Support separated stats file to avoid large files
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
 - [ ]  🔥 Add CI/CD

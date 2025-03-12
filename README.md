@@ -53,10 +53,11 @@ Soon...
 
 - [X]  🗝 Support for events
 - [ ]  🗝 Setup config files and guide
-- [ ]  🗝 Typescript rewrite
+- [X]  🗝 Typescript rewrite
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
-- [ ]  🔥 Deployment config and guide for linux based server using cronjobs
+- [ ]  🔥 Add CI/CD
+- [ ]  🔥 Deployment config and guide for linux/raspberry pi based server using cronjobs
 - [ ]  ❓ Support for multiple days events
 - [ ]  ❓ More statistics
 

@@ -219,13 +219,8 @@ async function main() {
                 console.error(`Unknown option: ${args[2]}\nTry 'node .../starghazer.js --help`)
         }
     }
-    else if (args.length == 2) {
-        const jsonStats = await fetchAPI<RepoStats>(REPO_ENDPOINT);
-        if (jsonStats && typeof jsonStats === 'object' && Object.keys(jsonStats).length > 0) {
-            await saveToJson(jsonStats as RepoStats, true);
-        }
-        runServer();
-    }
+    else
+        console.error(`Unknown option: ${args[2]}\nTry 'node .../starghazer.js --help`)
 }
 
 main();

@@ -11,8 +11,10 @@
         "build:server": "tsc -p tsconfig.json",
         "build:client": "tsc -p tsconfig.client.json",
         "build": "npm run build:server && npm run build:client",
-        "start": "node dist/starghazer.js --serve",
-        "dev": "npm run build && npm run start",
+        "server": "node dist/starghazer.js --serve",
+        "fetch": "node dist/starghazer.js --fetch",
+        "all": "npm run fetch && npm run server",
+        "dev": "npm run build && npm run server",
         "clean": "rm -rf dist public/index.js"
     }
 }

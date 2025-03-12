@@ -37,7 +37,9 @@ Every time you will call the main program, 1 call to the API is made + 1 or more
 Theses are the languages/frameworks/libraries used.
 
 [![NodeJS][node-shield]](https://nodejs.org/en) <br>
-[![Chart.js][chart-shield]](https://www.chartjs.org/)
+[![Chart.js][chart-shield]](https://www.chartjs.org/) <br>
+[![TypeScript][ts-shield]](https://www.typescriptlang.org/)
+
 
 
 
@@ -80,4 +82,5 @@ If you wish to contribute, feel free to do so ! You can fork and open PRs.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [node-shield]: https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[ts-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [chart-shield]: https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=fff

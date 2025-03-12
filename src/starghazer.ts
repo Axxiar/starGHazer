@@ -9,6 +9,8 @@ const STAT_PATH = "./data/ciso-assistant-stats.json"
 const EVENT_PATH = "./data/ciso-assistant-events.json"
 const URLS = ["/", "/index.html", "/public/index.js"]
 
+const HELP_MESSAGE = `soon tm tm`
+
 interface RepoStats {
     stargazers_count: number;
     open_issues_count: number;
@@ -199,26 +201,31 @@ async function runServer(): Promise<void> {
 
 async function main() {
     const args = process.argv;
-    if (process.argv.length == 3) {
-        switch (process.argv[2].toLowerCase()) {
+    if (args.length == 3) {
+        switch (args[2].toLowerCase()) {
             case "--serve": case "-s":
+                runServer();
                 break;
             case "--fetch": case "-f":
+                const jsonStats = await fetchAPI<RepoStats>(REPO_ENDPOINT);
+                if (jsonStats && typeof jsonStats === 'object' && Object.keys(jsonStats).length > 0) {
+                    await saveToJson(jsonStats as RepoStats, true);
+                }
                 break;
             case "--help": case "-h":
-                console.log(
-                    """""
-                )
+                console.log(HELP_MESSAGE)
                 break;
             default:
-                console.error(`Unknown option: ${process.argv[2]}\nTry 'node .../starghazer.js --help`)
+                console.error(`Unknown option: ${args[2]}\nTry 'node .../starghazer.js --help`)
         }
     }
-    // const jsonStats = await fetchAPI<RepoStats>(REPO_ENDPOINT);
-    // if (jsonStats && typeof jsonStats === 'object' && Object.keys(jsonStats).length > 0) {
-    //     await saveToJson(jsonStats as RepoStats, true);
-    // }
-    runServer();
+    else if (args.length == 2) {
+        const jsonStats = await fetchAPI<RepoStats>(REPO_ENDPOINT);
+        if (jsonStats && typeof jsonStats === 'object' && Object.keys(jsonStats).length > 0) {
+            await saveToJson(jsonStats as RepoStats, true);
+        }
+        runServer();
+    }
 }
 
 main();

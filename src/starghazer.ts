@@ -128,7 +128,12 @@ async function saveToJson(stats: RepoStats, debug = true): Promise<void> {
         "forkCount": forkCount,
         "branchCount": branchCount
     });
-    await fs.writeFile(STAT_PATH, JSON.stringify(jsonData));
+    try {
+        fs.writeFile(STAT_PATH, JSON.stringify(jsonData));
+    }
+    catch (err) {
+        console.error('Error writing file:', err);
+    };
 }
 
 // async function popLastJson() {

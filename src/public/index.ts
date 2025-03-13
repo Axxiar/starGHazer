@@ -1,18 +1,61 @@
-window.onload = () => {
-    fetch("/stats").then((res) => {
-        res.json().then((statJson) => {
+interface StatData {
+    date: {
+        year: number;
+        month: number;
+        day: number;
+    };
+    starCount: number;
+    issueCount: number;
+    forkCount: number;
+    branchCount: number;
+    description?: string;
+}
 
-            fetch("/events").then((res2) => {
-                res2.json().then((eventJson) => {
-                    console.log(eventJson);
-                    displayData(statJson, eventJson, 2025);
-                });
-            });
-        });
-    });
-};
+interface EventData {
+    date: {
+        year: number;
+        month: number;
+        day: number;
+    };
+    event: string;
+}
 
-function buildAnnotations(eventJson) {
+interface Annotation {
+    type: 'line';
+    borderColor: string;
+    borderWidth: number;
+    label: {
+        color: string;
+        borderColor: string;
+        borderWidth: number;
+        backgroundColor: string;
+        display: boolean;
+        content: string;
+        position: 'start';
+    };
+    scaleID: 'x';
+    value: string;
+}
+
+window.addEventListener('load', async () => {
+    try {
+        const statsResponse = await fetch('/stats');
+        const statsData: StatData[] = await statsResponse.json();
+
+        const eventsResponse = await fetch('/events');
+        const eventsData: EventData[] = await eventsResponse.json();
+
+        console.log(eventsData);
+        displayData(statsData, eventsData, 2025);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+});
+
+
+declare const Chart: any;
+
+function buildAnnotations(eventJson: EventData[]): Annotation[] {
     return eventJson.map((e) => {
         return {
             type: 'line',
@@ -33,16 +76,15 @@ function buildAnnotations(eventJson) {
     })
 }
 
-function displayData(statJson, eventJson, selectedYear = null) {
-    const ctx = document.getElementById('starsChart');
+function displayData(statJson: StatData[], eventJson: EventData[], selectedYear: number | null = null): void {
+
+    const ctx = document.getElementById('starsChart') as HTMLCanvasElement;
 
     if (selectedYear) {
-        statJson = statJson.filter((e) => e.date.year == selectedYear)
-        eventJson = eventJson.filter((e) => e.date.year == selectedYear)
+        statJson = statJson.filter((e) => e.date.year == selectedYear);
+        eventJson = eventJson.filter((e) => e.date.year == selectedYear);
     }
-    const labels = statJson.map((e) => {
-        return e.date.day + "/" + e.date.month + "/" + e.date.year
-    })
+    const labels = statJson.map((e) => { return e.date.day + "/" + e.date.month + "/" + e.date.year; })
     const statData = {
         labels: labels,
         datasets: [
@@ -117,8 +159,8 @@ function displayData(statJson, eventJson, selectedYear = null) {
             },
             tooltip: {
                 callbacks: {
-                    label: function (tooltipItem) {
-                        var description = tooltipItem.raw.description || 'No description available';
+                    label: function (tooltipItem: any) {
+                        var description = tooltipItem.raw?.description || 'No description available';
                         return description;
                     }
                 }
@@ -144,6 +186,6 @@ function displayData(statJson, eventJson, selectedYear = null) {
         }
     };
 
-    a = new Chart(ctx, config);
+    new Chart(ctx, config);
     Chart.defaults.color = '#c6d0f5';
 }

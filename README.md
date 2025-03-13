@@ -34,51 +34,86 @@ Every time you will call the main program, 1 call to the API is made + 1 or more
 
 ### Built With
 
-Theses are the languages/frameworks/libraries used.
-
 [![NodeJS][node-shield]](https://nodejs.org/en) <br>
-[![Chart.js][chart-shield]](https://www.chartjs.org/)
+[![Chart.js][chart-shield]](https://www.chartjs.org/) <br>
+[![TypeScript][ts-shield]](https://www.typescriptlang.org/)
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
+### Requirements
+
+- node 20+
+- npm 10.9+
+- tsc 4+ (typescript)
+
 ### Installation steps
 
-Make sure you have `node` installed and the `dotenv` package.
-
-Clone the repo and cd into it
+1. Clone the repo and cd into it
 ```bash
 git clone https://github.com/Axxiar/starGHazer.git
 cd starGHazer/
 ```
-Rename `.env.example` file to `.env`
+2. Rename `.env.example` file to `.env`
 
-Edit `.env` and replace with the owner (`REPO_OWNER`) and name (`REPO_NAME`) of the repository you want to track
+3. Edit `.env` and replace with the owner (`REPO_OWNER`) and name (`REPO_NAME`) of the repository you want to track
 
-> e.g. to track this repo : https://github.com/catppuccin/palette, the owner is "catppuccin" and the repo name is "palette",
-so you should have this as `.env` file :
-> ```env
-> REPO_OWNER="catppuccin"
-> REPO_NAME="palette"
-> ```
+  > e.g. to track this repo : https://github.com/catppuccin/palette, the owner is "catppuccin" and the repo name is "palette",
+  so you should have this as `.env` file :
+  > ```env
+  > REPO_OWNER="catppuccin"
+  > REPO_NAME="palette"
+  > ```
 
-Finally, start the main program and follow instructions
-```bash
-node starghzer.js
+4. Install dependecies and build the project
 ```
+npm install
+npm run build
+```
+
+5. Finally, start the project
+```
+npm run all
+```
+  *This is equivalent to :* 
+  ```
+  node dist/starghazer.js --fetch
+  node dist/starghazer.js --serve
+  ```
+
+### NPM scripts
+
+Here are available npm scripts : 
+
+`build:server`: builds js server-side files from typescript
+
+`build:client`: builds js client-side files from typescript
+
+`build`: build:server & build:client
+
+`server`: start the server
+
+`fetch`: fetch api data and store them
+
+`all`: fetch & server
+
+`dev`: build & server
+
+`clean`: remove built files
 
 <!-- ROADMAP -->
 ## Roadmap (ordered by importance)
 
 - [X]  🗝 Support for events
 - [ ]  🗝 Setup config files and guide
-- [ ]  🗝 Typescript rewrite
+- [X]  🗝 Typescript rewrite
 - [ ]  🗝 Support separated stats file to avoid large files
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
-- [ ]  🔥 Deployment config and guide for linux based server using cronjobs
+- [ ]  🔥 Add CI/CD
+- [ ]  🔥 Deployment config and guide for linux/raspberry pi based server using cronjobs
 - [ ]  ❓ Support for multiple days events
 - [ ]  ❓ More statistics
 
@@ -101,4 +136,5 @@ If you wish to contribute, feel free to do so ! You can fork and open PRs.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [node-shield]: https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[ts-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [chart-shield]: https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=fff

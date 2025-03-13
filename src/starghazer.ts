@@ -1,15 +1,42 @@
-const fs = require('fs/promises');
-const http = require('http');
-const path = require('path');
-require('dotenv').config()
+import fs from 'fs/promises';
+import http from 'http';
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config()
 
 const REPO_ENDPOINT = `https://api.github.com/repos/${process.env.REPO_OWNER}/${process.env.REPO_NAME}`
 const STAT_PATH = "./data/ciso-assistant-stats.json"
 const EVENT_PATH = "./data/ciso-assistant-events.json"
 const URLS = ["/", "/index.html", "/public/index.js"]
 
+const HELP_MESSAGE = `soon tm tm`
 
-async function fetchAPI(url) {
+interface RepoStats {
+    stargazers_count: number;
+    open_issues_count: number;
+    forks_count: number;
+}
+
+interface Branch {
+    name: string;
+}
+
+interface StatEntry {
+    date: {
+        year: number;
+        month: number;
+        day: number;
+        hours: number;
+        minutes: number;
+    };
+    starCount: number;
+    issueCount: number;
+    forkCount: number;
+    branchCount: number;
+}
+
+
+async function fetchAPI<T>(url: string): Promise<T | {}> {
     try {
         const res = await fetch(url);
         if (res.status === 200) {
@@ -24,35 +51,36 @@ async function fetchAPI(url) {
 }
 
 
-function getRepoStars(stats, debug = true) {
+function getRepoStars(stats: RepoStats, debug = true): number {
     if (debug)
         console.log(`[Intuitem] ciso-assistant: ${stats.stargazers_count}⭐`);
     return stats.stargazers_count;
 }
 
 
-function getRepoIssues(stats, debug = true) {
+function getRepoIssues(stats: RepoStats, debug = true): number {
     if (debug)
         console.log(`[Intuitem] ciso-assistant (open issues): ${stats.open_issues_count}🎯`);
     return stats.open_issues_count;
 }
 
-function getRepoForks(stats, debug = true) {
+function getRepoForks(stats: RepoStats, debug = true): number {
     if (debug)
         console.log(`[Intuitem] ciso-assistant (forks): ${stats.forks_count}🔱`);
     return stats.forks_count;
 }
 
-async function getRepoBranches(perPage = 100, debug = true) {
-    let branches = {};
+async function getRepoBranches(perPage = 100, debug = true): Promise<number> {
     let current_branches_len = 0;
     let page_index = 1;
     let total = 0;
 
     // TODO: rewrite this loop with better break condition
     do {
-        branches = await fetchAPI(REPO_ENDPOINT + `/branches?per_page=${perPage}&page=${page_index}`);
-        if (branches == {}) return -1;
+        const branches = await fetchAPI<Branch[]>(
+            REPO_ENDPOINT + `/branches?per_page=${perPage}&page=${page_index}`
+        );
+        if (!Array.isArray(branches) || branches.length === 0) return -1;
 
         current_branches_len = branches.length;
         total += current_branches_len;
@@ -64,10 +92,10 @@ async function getRepoBranches(perPage = 100, debug = true) {
     return total;
 }
 
-async function loadJson(path) {
+async function loadJson<T>(path: string): Promise<T[]> {
     try {
-        const data = await fs.readFile(path);
-        return JSON.parse(data);
+        const data = await fs.readFile(path, 'utf-8');
+        return JSON.parse(data) as T[];
     }
     catch (err) {
         console.error('Error reading or parsing file:', err);
@@ -75,18 +103,18 @@ async function loadJson(path) {
     }
 }
 
-async function saveToJson(stats, debug = true) {
+async function saveToJson(stats: RepoStats, debug = true): Promise<void> {
 
-    starCount = getRepoStars(stats, debug);
-    issueCount = getRepoIssues(stats, debug);
-    forkCount = getRepoForks(stats, debug);
-    branchCount = await getRepoBranches(100, debug);
+    const starCount = getRepoStars(stats, debug);
+    const issueCount = getRepoIssues(stats, debug);
+    const forkCount = getRepoForks(stats, debug);
+    const branchCount = await getRepoBranches(100, debug);
 
     if (starCount === -1 || issueCount === -1 || forkCount === -1 || branchCount === -1)
         return;
 
-    jsonData = await loadJson(STAT_PATH);
-    let today = new Date();
+    const jsonData = await loadJson(STAT_PATH);
+    const today = new Date();
     jsonData.push({
         "date": {
             "year": today.getFullYear(),
@@ -100,11 +128,12 @@ async function saveToJson(stats, debug = true) {
         "forkCount": forkCount,
         "branchCount": branchCount
     });
-    fs.writeFile(STAT_PATH, JSON.stringify(jsonData), (err) => {
-        if (err) {
-            console.error('Error appending to file:', err);
-        }
-    });
+    try {
+        fs.writeFile(STAT_PATH, JSON.stringify(jsonData));
+    }
+    catch (err) {
+        console.error('Error writing file:', err);
+    };
 }
 
 // async function popLastJson() {
@@ -123,26 +152,26 @@ async function saveToJson(stats, debug = true) {
 // }
 
 
-async function displayOnServer() {
+async function runServer(): Promise<void> {
     const PORT = 5000;
     const server = http.createServer(async (req, res) => {
 
         if (req.url == "/stats") {
-            const stats = await loadJson(STAT_PATH);
+            const stats = await loadJson<StatEntry>(STAT_PATH);
 
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(stats));
         }
 
         else if (req.url == "/events") {
-            const events = await loadJson(EVENT_PATH);
+            const events = await loadJson<any>(EVENT_PATH);
 
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(events));
         }
 
 
-        else if (URLS.includes(req.url)) {
+        else if (URLS.includes(req.url || '')) {
             try {
                 let contentType = "text/html";
                 let reqPath = "index.html";
@@ -151,7 +180,7 @@ async function displayOnServer() {
                     contentType = "application/javascript";
                     reqPath = "index.js";
                 }
-                const filePath = path.join(__dirname, "public", reqPath);
+                const filePath = path.join(__dirname, "../public", reqPath);
 
                 const data = await fs.readFile(filePath);
 
@@ -176,11 +205,27 @@ async function displayOnServer() {
 
 
 async function main() {
-    jsonStats = await fetchAPI(REPO_ENDPOINT);
-    await saveToJson(jsonStats, true);
-    displayOnServer();
+    const args = process.argv;
+    if (args.length == 3) {
+        switch (args[2].toLowerCase()) {
+            case "--serve": case "-s":
+                runServer();
+                break;
+            case "--fetch": case "-f":
+                const jsonStats = await fetchAPI<RepoStats>(REPO_ENDPOINT);
+                if (jsonStats && typeof jsonStats === 'object' && Object.keys(jsonStats).length > 0) {
+                    await saveToJson(jsonStats as RepoStats, true);
+                }
+                break;
+            case "--help": case "-h":
+                console.log(HELP_MESSAGE)
+                break;
+            default:
+                console.error(`Unknown option: ${args[2]}\nTry 'node .../starghazer.js --help`)
+        }
+    }
+    else
+        console.error(`Unknown option: ${args[2]}\nTry 'node .../starghazer.js --help`)
 }
 
-
-// -- MAIN --
 main();

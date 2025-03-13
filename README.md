@@ -42,34 +42,68 @@ Theses are the languages/frameworks/libraries used.
 
 
 
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
+### Requirements
+
+- node 20+
+- npm 10.9+
+- tsc 4+ (typescript)
+
 ### Installation steps
 
-Make sure you have `node` installed and the `dotenv` package.
-
-Clone the repo and cd into it
+1. Clone the repo and cd into it
 ```bash
 git clone https://github.com/Axxiar/starGHazer.git
 cd starGHazer/
 ```
-Rename `.env.example` file to `.env`
+2. Rename `.env.example` file to `.env`
 
-Edit `.env` and replace with the owner (`REPO_OWNER`) and name (`REPO_NAME`) of the repository you want to track
+3. Edit `.env` and replace with the owner (`REPO_OWNER`) and name (`REPO_NAME`) of the repository you want to track
 
-> e.g. to track this repo : https://github.com/catppuccin/palette, the owner is "catppuccin" and the repo name is "palette",
-so you should have this as `.env` file :
-> ```env
-> REPO_OWNER="catppuccin"
-> REPO_NAME="palette"
-> ```
+  > e.g. to track this repo : https://github.com/catppuccin/palette, the owner is "catppuccin" and the repo name is "palette",
+  so you should have this as `.env` file :
+  > ```env
+  > REPO_OWNER="catppuccin"
+  > REPO_NAME="palette"
+  > ```
 
-Finally, start the main program and follow instructions
-```bash
-node starghzer.js
+4. Install dependecies and build the project
 ```
+npm install
+npm run build
+```
+
+5. Finally, start the project
+```
+npm run all
+```
+*This is equivalent to :* 
+  ```
+  node dist/starghazer.js --fetch
+  node dist/starghazer.js --serve
+  ```
+
+### NPM scripts
+
+Here are available npm scripts : 
+
+`build:server`: builds js server-side files from typescript
+
+`build:client`: builds js client-side files from typescript
+
+`build`: build:server & build:client
+
+`server`: start the server
+
+`fetch`: fetch api data and store them
+
+`all`: fetch & server
+
+`dev`: build & server
+
+`clean`: remove built files
 
 <!-- ROADMAP -->
 ## Roadmap (ordered by importance)

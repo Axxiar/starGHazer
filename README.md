@@ -34,8 +34,6 @@ Every time you will call the main program, 1 call to the API is made + 1 or more
 
 ### Built With
 
-Theses are the languages/frameworks/libraries used.
-
 [![NodeJS][node-shield]](https://nodejs.org/en) <br>
 [![Chart.js][chart-shield]](https://www.chartjs.org/) <br>
 [![TypeScript][ts-shield]](https://www.typescriptlang.org/)
@@ -79,7 +77,7 @@ npm run build
 ```
 npm run all
 ```
-*This is equivalent to :* 
+  *This is equivalent to :* 
   ```
   node dist/starghazer.js --fetch
   node dist/starghazer.js --serve

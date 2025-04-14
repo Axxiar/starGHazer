@@ -3,7 +3,7 @@
 <!-- INTRO -->
 # 🌟 starGHazer
 
-### Track statistics of a GitHub repo without authentication
+### Easily track statistics of a GitHub repo without authentication
 
 ![image](https://github.com/user-attachments/assets/9e03ce79-2724-4652-80d9-c639481d8fd1)
 

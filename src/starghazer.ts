@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 const REPO_ENDPOINT = `https://api.github.com/repos/${process.env.REPO_OWNER}/${process.env.REPO_NAME}`
-const STAT_PATH = "./data/ciso-assistant-stats.json"
+const STAT_DIR = "./data/stats"
 const EVENT_PATH = "./data/ciso-assistant-events.json"
 const URLS = ["/", "/index.html", "/public/index.js"]
 
@@ -113,7 +113,7 @@ async function saveToJson(stats: RepoStats, debug = true): Promise<void> {
     if (starCount === -1 || issueCount === -1 || forkCount === -1 || branchCount === -1)
         return;
 
-    const jsonData = await loadJson(STAT_PATH);
+    const jsonData = await loadJson(STAT_DIR);
     const today = new Date();
     jsonData.push({
         "date": {
@@ -129,7 +129,7 @@ async function saveToJson(stats: RepoStats, debug = true): Promise<void> {
         "branchCount": branchCount
     });
     try {
-        fs.writeFile(STAT_PATH, JSON.stringify(jsonData));
+        fs.writeFile(STAT_DIR, JSON.stringify(jsonData));
     }
     catch (err) {
         console.error('Error writing file:', err);
@@ -157,7 +157,7 @@ async function runServer(): Promise<void> {
     const server = http.createServer(async (req, res) => {
 
         if (req.url == "/stats") {
-            const stats = await loadJson<StatEntry>(STAT_PATH);
+            const stats = await loadJson<StatEntry>(STAT_DIR);
 
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(stats));

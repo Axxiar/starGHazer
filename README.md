@@ -105,6 +105,7 @@ Here are available npm scripts :
 - [ ]  🗝 Setup config files and guide
 - [X]  🗝 Typescript rewrite
 - [ ]  🗝 Support separated stats file to avoid large files
+- [ ]  :fire: Support [Mermaid](https://mermaid.js.org/) graph for READMEs 
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
 - [ ]  🔥 Add CI/CD

@@ -68,20 +68,15 @@ cd starGHazer/
   > ```
 
 4. Install dependecies and build the project
-```
+```sh
 npm install
 npm run build
 ```
 
 5. Finally, start the project
+```sh
+npm run all  # equivalent to:  node dist/starghazer.js --fetch && node dist/starghazer.js --serve
 ```
-npm run all
-```
-  *This is equivalent to :* 
-  ```
-  node dist/starghazer.js --fetch
-  node dist/starghazer.js --serve
-  ```
 
 ### NPM scripts
 
@@ -110,6 +105,7 @@ Here are available npm scripts :
 - [ ]  🗝 Setup config files and guide
 - [X]  🗝 Typescript rewrite
 - [ ]  🗝 Support separated stats file to avoid large files
+- [ ]  :fire: Support [Mermaid](https://mermaid.js.org/) graph for READMEs 
 - [ ]  🔥 Visually select displayed year data
 - [ ]  🔥 Terminal wizard for first setup
 - [ ]  🔥 Add CI/CD

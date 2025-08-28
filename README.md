@@ -92,7 +92,7 @@ Here are available npm scripts :
 
 `fetch`: fetch api data and store them
 
-`all`: fetch & server
+`all`: build & fetch & server
 
 `dev`: build & server
 

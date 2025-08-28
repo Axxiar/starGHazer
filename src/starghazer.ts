@@ -26,8 +26,6 @@ interface StatEntry {
         year: number;
         month: number;
         day: number;
-        hours: number;
-        minutes: number;
     };
     starCount: number;
     issueCount: number;
@@ -120,8 +118,6 @@ async function saveToJson(stats: RepoStats, debug = true): Promise<void> {
             "year": today.getFullYear(),
             "month": today.getMonth() + 1,
             "day": today.getDate(),
-            "hours": today.getHours(),
-            "minutes": today.getMinutes(),
         },
         "starCount": starCount,
         "issueCount": issueCount,

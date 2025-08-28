@@ -13,8 +13,8 @@
         "build": "npm run build:server && npm run build:client",
         "server": "node dist/starghazer.js --serve",
         "fetch": "node dist/starghazer.js --fetch",
-        "all": "npm run fetch && npm run server",
-        "dev": "npm run build && npm run server",
+        "all": "npm run build; npm run fetch; npm run server",
+        "dev": "npm run build; npm run server",
         "clean": "rm -rf dist public/index.js"
     }
 }

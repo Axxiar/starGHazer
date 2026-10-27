@@ -117,7 +117,6 @@ Here are available npm scripts :
 🔥: *cool extra feature idea*
 ❓: *extra feature idea (wil probably not be added or at least not soon)*
 
-
 <!-- CONTRIBUTING --> 
 ## Contributing
 
